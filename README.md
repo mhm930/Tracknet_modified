@@ -1,5 +1,17 @@
 # TrackNet: Tennis Ball Tracking from Broadcast Video by Deep Learning Networks
 
+## Reference:
+1. Yu-Chuan Huang, "TrackNet: Tennis Ball Tracking from Broadcast Video by Deep Learning Networks," 
+    Master Thesis, advised by Tsì-Uí İk and Guan-Hua Huang, National Chiao Tung University, Taiwan, 2018.
+2. Yu-Chuan Huang, I-No Liao, Ching-Hsuan Chen, Tsì-Uí İk, and Wen-Chih Peng, 
+    "TrackNet: A Deep Learning Network for Tracking High-speed and Tiny Objects in Sports Applications,"
+    in the IEEE International Workshop of Content-Aware Video Analysis (CAVA-AVSS19)
+    in conjunction with the 16th IEEE International Conference on Advanced Video and Signal-based Surveillance (AVSS 2019),
+    18-21 September 2019, Taipei, Taiwan.
+
+## Dataset
+
+
 ## First, you have to install cuda, cudnn and tensorflow, tutorial:
 https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubuntu-79306e4ac04e
 
