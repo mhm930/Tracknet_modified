@@ -1,19 +1,9 @@
 # TrackNet: Tennis Ball Tracking from Broadcast Video by Deep Learning Networks
 
-## Reference:
-1. Yu-Chuan Huang, "TrackNet: Tennis Ball Tracking from Broadcast Video by Deep Learning Networks," 
-    Master Thesis, advised by Tsì-Uí İk and Guan-Hua Huang, National Chiao Tung University, Taiwan, 2018.
-2. Yu-Chuan Huang, I-No Liao, Ching-Hsuan Chen, Tsì-Uí İk, and Wen-Chih Peng, 
-    "TrackNet: A Deep Learning Network for Tracking High-speed and Tiny Objects in Sports Applications,"
-    in the IEEE International Workshop of Content-Aware Video Analysis (CAVA-AVSS19)
-    in conjunction with the 16th IEEE International Conference on Advanced Video and Signal-based Surveillance (AVSS 2019),
-    18-21 September 2019, Taipei, Taiwan.
-
-## Dataset
-
 
 ## First, you have to install cuda, cudnn and tensorflow, tutorial:
 https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubuntu-79306e4ac04e
+
 
 ## Second, install some python library with pip:
 * sudo pip install numpy
@@ -24,7 +14,6 @@ https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubu
 * sudo pip install pydot
 * sudo pip install h5py
 * sudo apt-get install graphviz
-
 
 
 ## How to train a new TrackNet I weight?
@@ -78,6 +67,7 @@ https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubu
 			--step_per_epochs: Step per Epochs be set as 200 in this work
 			-batch_size: Batch size be set as 2 in this work
 
+
 ## How to train a new TrackNet II' weight?
 1. Create heatmap as Ground Truth, and save heatmap as JPG file
 	Code be save in Ground_Truth_Generator.py, you may need to change the folder path in python code
@@ -103,6 +93,7 @@ https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubu
 			--step_per_epochs: Step per Epochs be set as 200 in this work
 			-batch_size: Batch size be set as 2 in this work
 
+
 ## How to output all of heatmap predictions?
 1. Open command line
 2. Change directory to TrackNet folder (TrackNet_Three_Frames_Input or TrackNet_One_Frames_Input)
@@ -121,7 +112,6 @@ https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubu
 			-output_width: resize the heatmap width,output width be set as 1280 in this work
 
 
-
 ## How to use TrackNet predict video?
 1. Open command line
 2. Change directory to TrackNet folder (TrackNet_Three_Frames_Input or TrackNet_One_Frames_Input)
@@ -136,13 +126,28 @@ https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubu
 			--n_classes: In this work depth be set as 256 
 
 
-
 ## TrackNet trained weights:
 	* TrackNet model I   >>   TrackNet_One_Frames_Input/weights.model.1
 	* TrackNet model II  >>   TrackNet_Three_Frames_Input/weights.model.2
 	* TrackNet model II' >>   TrackNet_Three_Frames_Input/weights.model.3
 
 
+## Dataset
+A dataset is available via the link:
+https://drive.google.com/file/d/1Dq2ag6a7ESHJm3ZHSJrYcu9_hWNyNkx1/view?usp=sharing
+
 
 ## Labeling Tool: Make your own dataset
 See the readme file in the LabelingTool directory
+
+
+## Reference:
+If you use TrackNet in your work, please cite the following papers!
+1. Yu-Chuan Huang, "TrackNet: Tennis Ball Tracking from Broadcast Video by Deep Learning Networks," 
+    Master Thesis, advised by Tsì-Uí İk and Guan-Hua Huang, National Chiao Tung University, Taiwan, April 2018.
+2. Yu-Chuan Huang, I-No Liao, Ching-Hsuan Chen, Tsì-Uí İk, and Wen-Chih Peng, 
+    "TrackNet: A Deep Learning Network for Tracking High-speed and Tiny Objects in Sports Applications,"
+    in the IEEE International Workshop of Content-Aware Video Analysis (CAVA 2019)
+    in conjunction with the 16th IEEE International Conference on Advanced Video and Signal-based Surveillance (AVSS 2019),
+    18-21 September 2019, Taipei, Taiwan.
+
