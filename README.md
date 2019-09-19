@@ -18,9 +18,9 @@ https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubu
 
 ## How to train a new TrackNet I weight?
 1. Create heatmap as Ground Truth, and save heatmap as JPG file
-	Code be save in Ground_Truth_Generator.py, you may need to change the folder path in python code
+	Code be save in TrackNet_Python.ipynb (first part), you may need to change the folder path in python code
 2. The training file name and testing file name of TrackNet must be output as csv file
-	Code be save in Model1_Training_Testing_Gen.py, you also need to change the folder path in code
+	Code be save in TrackNet_Python.ipynb (second part), you also need to change the folder path in code
 3. Copy the training_model1.csv file and testing_model1.csv file to TrackNet_One_Frames_Input folder
 4. After have training images and ground truth, we can start to train the TrackNet model I
 	* Open command line
@@ -44,9 +44,9 @@ https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubu
 
 ## How to train a new TrackNet II weight?
 1. Create heatmap as Ground Truth, and save heatmap as JPG file
-	Code be saved in Ground_Truth_Generator.py, you may need to change the folder path in python code
+	Code be saved in TrackNet_Python.ipynb (first part), you may need to change the folder path in python code
 2. The training file name and testing file name of TrackNet must be output as csv file
-	Code be save in Model2_Training_Testing_Gen.py, you also need to change the folder path in code
+	Code be save in TrackNet_Python.ipynb (third part), you also need to change the folder path in code
 3. Copy the training_model2.csv file and testing_model2.csv file to TrackNet_Three_Frames_Input folder
 4. After have training images and ground truth, we can start to train the TrackNet model II
 	* Open command line
@@ -70,9 +70,9 @@ https://medium.com/@zhanwenchen/install-cuda-and-cudnn-for-tensorflow-gpu-on-ubu
 
 ## How to train a new TrackNet II' weight?
 1. Create heatmap as Ground Truth, and save heatmap as JPG file
-	Code be save in Ground_Truth_Generator.py, you may need to change the folder path in python code
+	Code be save in TrackNet_Python.ipynb (first part), you may need to change the folder path in python code
 2. The training file name and testing file name of TrackNet must be output as csv file
-	Code be save in TrackNet_Python.ipynb (third part, fourth part amd fifth part), you also need to change the folder path in code
+	Code be save in TrackNet_Python.ipynb (third part, fourth part and fifth part), you also need to change the folder path in code
 3. Copy the training_model3.csv file to TrackNet_Three_Frames_Input folder
 4. After have training images and ground truth, we can start to train the TrackNet model II'
 	* Open command line
