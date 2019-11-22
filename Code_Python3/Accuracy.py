@@ -18,7 +18,7 @@ for model in [1, 2]:
     statistics  = []
     GroundTruth = {}
     
-    images_path = '/tracknetv1/dataset/tennis/'
+    images_path = '/dataset/tennis/'
     dirs = glob.glob(images_path+'data/Clip*')
     for number in dirs:
         #################change the path####################################################
@@ -49,7 +49,7 @@ for model in [1, 2]:
         testing_file_path = "./TrackNet_Three_Frames_Input/testing_model" + str(model)+".csv"
     if model ==1:
         testing_file_path = "./TrackNet_One_Frame_Input/testing_model" + str(model)+".csv"
-    predition_path = "/tracknetv1/output/predict/Model" + str(model)+ "/"
+    predition_path = "/dataset/tennis/predict/Model" + str(model)+ "/"
     ####################################################################################
 
     #predict all of the testing image, and check True_Positive, False_Positive, Negative
@@ -60,8 +60,8 @@ for model in [1, 2]:
             pic_name = row[0]
             pic_number = pic_number + 1
             #################change the Dataset path####################################################
-            heatmap = cv2.imread(pic_name.replace( "/tracknetv1/dataset/tennis/data/",  predition_path),0) 
-            #print(pic_name.replace('/tracknetv1/dataset/tennis/data/',predition_path))
+            heatmap = cv2.imread(pic_name.replace( "/dataset/tennis/data/",  predition_path),0) 
+            #print(pic_name.replace('/dataset/tennis/data/',predition_path))
             ####################################################################################
             
             #heatmap is converted into a binary image by threshold method.

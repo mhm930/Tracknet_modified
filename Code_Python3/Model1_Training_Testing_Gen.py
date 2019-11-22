@@ -10,7 +10,7 @@ training_file_name = "./TrackNet_One_Frame_Input/training_model1.csv"
 testing_file_name = "./TrackNet_One_Frame_Input/testing_model1.csv"
 visibility_for_testing = []
 
-images_path = '/tracknetv1/dataset/tennis/'
+images_path = '/dataset/tennis/'
 dirs = glob.glob(images_path+'data/Clip*')
 with open(training_file_name,'w') as file:
     for index in dirs:

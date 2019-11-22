@@ -29,7 +29,7 @@ plt.show()
 
 
 #create the heatmap as ground truth
-images_path = '/tracknetv1/dataset/tennis/'
+images_path = '/dataset/tennis/'
 dirs = glob.glob(images_path+'data/Clip*')
 for index in dirs:
         #################change the path####################################################
