@@ -6,11 +6,12 @@ import numpy
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw
 import numpy as np
+from os.path import expanduser
 
 x_array = []
 c_array = []
 PE_larger_than_5  = []
-for model in [1, 2]:
+for model in [2]:
     True_Positive = [0,0,0,0]
     False_Positive = [0,0,0,0]
     Negative = [0,0,0,0]
@@ -18,7 +19,7 @@ for model in [1, 2]:
     statistics  = []
     GroundTruth = {}
     
-    images_path = '/dataset/tennis/'
+    images_path = expanduser("~")+'/dataset/tennis/'
     dirs = glob.glob(images_path+'data/Clip*')
     for number in dirs:
         #################change the path####################################################
@@ -49,7 +50,7 @@ for model in [1, 2]:
         testing_file_path = "./TrackNet_Three_Frames_Input/testing_model" + str(model)+".csv"
     if model ==1:
         testing_file_path = "./TrackNet_One_Frame_Input/testing_model" + str(model)+".csv"
-    predition_path = "/dataset/tennis/predict/Model" + str(model)+ "/"
+    predition_path = expanduser("~")+"/dataset/tennis/predict/Model" + str(model)+ "/"
     ####################################################################################
 
     #predict all of the testing image, and check True_Positive, False_Positive, Negative
@@ -60,8 +61,8 @@ for model in [1, 2]:
             pic_name = row[0]
             pic_number = pic_number + 1
             #################change the Dataset path####################################################
-            heatmap = cv2.imread(pic_name.replace( "/dataset/tennis/data/",  predition_path),0) 
-            #print(pic_name.replace('/dataset/tennis/data/',predition_path))
+            heatmap = cv2.imread(pic_name.replace( expanduser("~")+"/dataset/tennis/data/",  predition_path),0)
+            #print(pic_name.replace(expanduser("~")+'/dataset/tennis/data/',predition_path))
             ####################################################################################
             
             #heatmap is converted into a binary image by threshold method.

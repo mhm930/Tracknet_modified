@@ -3,7 +3,8 @@ import csv
 import numpy
 import matplotlib.pyplot as plt
 from PIL import Image
-import os 
+import os
+from os.path import expanduser
 
 size = 20
 #create gussian heatmap 
@@ -29,7 +30,7 @@ plt.show()
 
 
 #create the heatmap as ground truth
-images_path = '/dataset/tennis/'
+images_path = expanduser("~")+'/dataset/tennis/'
 dirs = glob.glob(images_path+'data/Clip*')
 for index in dirs:
         #################change the path####################################################

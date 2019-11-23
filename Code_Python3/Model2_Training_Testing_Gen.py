@@ -6,11 +6,12 @@ import itertools
 import random
 import csv
 import os
+from os.path import expanduser
 training_file_name = "./TrackNet_Three_Frames_Input/training_model2.csv"
 testing_file_name = "./TrackNet_Three_Frames_Input/testing_model2.csv"
 visibility_for_testing = []
 
-images_path = '/dataset/tennis/'
+images_path = expanduser("~")+'/dataset/tennis/'
 dirs = glob.glob(images_path+'data/Clip*')
 with open(training_file_name,'w') as file:
     for index in dirs:
