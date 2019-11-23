@@ -41,7 +41,7 @@ colors = [  ( i, i, i  ) for i in range(0, n_classes)  ]
 
 #predict each clips from 1 to 82
 dirs = glob.glob(images_path+'*')
-print(dirs)
+#print(dirs)
 for clip in dirs:
 
 	#get all JPG images in the path
