@@ -1,9 +1,10 @@
 import argparse
 import Models
-import Queue as queue
+import queue
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
+import time
 
 #parse parameters
 parser = argparse.ArgumentParser()
@@ -75,14 +76,13 @@ currentFrame +=1
 img = cv2.resize(img, ( width , height ))
 #input must be float type
 img = img.astype(np.float32)
-
-
+tic_total = time.time()
 
 while(True):
-
+	tic = time.time()    
 	img2 = img1
 	img1 = img
-
+    
 	#capture frame-by-frame
 	video.set(1,currentFrame); 
 	ret, img = video.read()
@@ -169,8 +169,10 @@ while(True):
 	opencvImage =  cv2.cvtColor(np.array(PIL_image), cv2.COLOR_RGB2BGR)
 	#write image to output_video
 	output_video.write(opencvImage)
+	print("FPS : ", 1 / (time.time() - tic))
 
 	#next frame
+   
 	currentFrame += 1
 
 # everything is done, release the video
