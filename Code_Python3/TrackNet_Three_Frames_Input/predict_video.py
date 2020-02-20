@@ -1,6 +1,6 @@
 import argparse
 import Models
-import queue
+import Queue as queue
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
