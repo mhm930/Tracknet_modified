@@ -41,9 +41,10 @@ m = modelFN( n_classes , input_height=height, input_width=width   )
 m.compile(loss='categorical_crossentropy', optimizer= 'adadelta' , metrics=['accuracy'])
 m.load_weights(  save_weights_path  )
 
-# In order to draw the trajectory of tennis, we need to save the coordinate of preious 7 frames 
+# In order to draw the trajectory of tennis, we need to save the coordinate of preious 7 frames
+buffer_length = 20 
 q = queue.deque()
-for i in range(0,8):
+for i in range(0,buffer_length):
 	q.appendleft(None)
 
 #save prediction images as vidoe
@@ -155,13 +156,13 @@ while(True):
 		q.pop()
 
 	#draw current frame prediction and previous 7 frames as yellow circle, total: 8 frames
-	for i in range(0,8):
+	for i in range(0,buffer_length):
 		if q[i] is not None:
 			draw_x = q[i][0]
 			draw_y = q[i][1]
 			bbox =  (draw_x - 2, draw_y - 2, draw_x + 2, draw_y + 2)
 			draw = ImageDraw.Draw(PIL_image)
-			draw.ellipse(bbox, outline ='yellow')
+			draw.ellipse(bbox, outline ='red')
 			del draw
 
 	#Convert PIL image format back to opencv image format
