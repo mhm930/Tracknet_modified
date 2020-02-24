@@ -1,6 +1,6 @@
 import argparse
 import Models
-import Queue
+import queue as Queue
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
@@ -109,7 +109,7 @@ while(True):
 
 			x = int(circles[0][0][0])
 			y = int(circles[0][0][1])
-			print currentFrame, x,y
+			print (currentFrame, x,y)
 
 			#push x,y to queue
 			q.appendleft([x,y])   
