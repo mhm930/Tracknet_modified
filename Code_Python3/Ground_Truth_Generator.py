@@ -30,8 +30,8 @@ plt.show()
 
 
 #create the heatmap as ground truth
-images_path = expanduser("~")+'/dataset/tennis/'
-dirs = glob.glob(images_path+'data/Clip*')
+images_path = '/content/drive/My Drive/Tennis-data-2'
+dirs = glob.glob(images_path)
 for index in dirs:
         #################change the path####################################################
         pics = glob.glob(index + "/*.jpg")
