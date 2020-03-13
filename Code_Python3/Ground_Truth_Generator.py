@@ -36,7 +36,7 @@ for index in dirs:
         #################change the path####################################################
         pics = glob.glob(index + "/*.jpg")
         output_pics_path = images_path+'groundtruth/' + os.path.split(index)[-1]
-        label_path = index + "/Label.csv"
+        label_path = "/content/drive/My Drive/Labeled dataset 2.csv"
         ####################################################################################
         
         #check if the path need to be create
