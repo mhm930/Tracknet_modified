@@ -6,12 +6,12 @@ import itertools
 import random
 import csv
 import os
-training_file_name = "./TrackNet_One_Frame_Input/training_model1.csv"
-testing_file_name = "./TrackNet_One_Frame_Input/testing_model1.csv"
+training_file_name = "/content/drive/My Drive/training_model1.csv"
+testing_file_name = "/content/drive/My Drive/testing_model1.csv"
 visibility_for_testing = []
 
-images_path = '/dataset/tennis/'
-dirs = glob.glob(images_path+'data/Clip*')
+images_path = '/content/drive/My Drive/Tennis-data-2'
+dirs = glob.glob(images_path)
 with open(training_file_name,'w') as file:
     for index in dirs:
         #################change the path####################################################
@@ -34,7 +34,7 @@ with open(training_file_name,'w') as file:
             assert(  im.split('/')[-1].split(".")[0] ==  seg.split('/')[-1].split(".")[0] )
 
         visibility = {}
-        with open(images_path + "Label.csv", 'r') as csvfile:
+        with open("/content/drive/My Drive/Labeled dataset 2.csv", 'r') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
             #skip the headers
             next(spamreader, None)  
