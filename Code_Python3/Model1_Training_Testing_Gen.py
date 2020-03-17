@@ -10,14 +10,14 @@ training_file_name = "/content/drive/My Drive/training_model1.csv"
 testing_file_name = "/content/drive/My Drive/testing_model1.csv"
 visibility_for_testing = []
 
-images_path = '/content/drive/My Drive/Tennis-data-2'
+images_path = '/content/drive/My Drive/Tennis-data-2/Tennis-data-2'
 dirs = glob.glob(images_path)
 with open(training_file_name,'w') as file:
     for index in dirs:
         #################change the path####################################################
 #        images_path = index+'/'
 
-        annos_path = images_path +'groundtruth/'+os.path.split(index)[-1]+'/'
+        annos_path = '/content/drive/My Drive/Tennis-data-2' +'groundtruth/'+os.path.split(index)[-1]+'/'
         print(annos_path)
         images_path = index+'/'
         ####################################################################################
