@@ -7,6 +7,7 @@ from keras.utils import plot_model
 parser = argparse.ArgumentParser()
 parser.add_argument("--save_weights_path", type = str  )
 parser.add_argument("--training_images_name", type = str  )
+parser.add_argument("--validation_images_name", type = str  )
 parser.add_argument("--n_classes", type=int )
 parser.add_argument("--input_height", type=int , default = 360  )
 parser.add_argument("--input_width", type=int , default = 640 )
@@ -17,6 +18,7 @@ parser.add_argument("--step_per_epochs", type = int, default = 200 )
 
 args = parser.parse_args()
 training_images_name = args.training_images_name
+validation_images_name = args.validation_images_name
 train_batch_size = args.batch_size
 n_classes = args.n_classes
 input_height = args.input_height
@@ -45,19 +47,19 @@ model_output_width = m.outputWidth
 
 #creat input data and output data
 Generator  = LoadBatches.InputOutputGenerator( training_images_name,  train_batch_size,  n_classes , input_height , input_width , model_output_height , model_output_width)
-
+val_Generator = LoadBatches.InputOutputGenerator( validation_images_name,  train_batch_size,  n_classes , input_height , input_width , model_output_height , model_output_width)
 
 #start to train the model, and save weights until finish 
-m.fit_generator( Generator, step_per_epochs, epochs )
-m.save_weights( save_weights_path + ".0" )
+m.fit_generator( Generator,step_per_epochs, epochs,validation_data=val_Generator,validation_steps = 10,use_multiprocessing=True)
+#m.save_weights( save_weights_path + ".0" )
 
 print('Training Done')
 
 #start to train the model, and save weights per 50 epochs  
-'''
+
 for ep in range(1, epochs+1 ):
 	print "Epoch :", str(ep) + "/" + str(epochs)
-	m.fit_generator(Generator, step_per_epochs)
+	#m.fit_generator(Generator, step_per_epochs)
+    m.fit_generator( Generator,step_per_epochs, epochs,validation_data=val_Generator,validation_steps = 10,use_multiprocessing=True)
 	if ep % 50 == 0:
 		m.save_weights(save_weights_path + ".0")
-'''
