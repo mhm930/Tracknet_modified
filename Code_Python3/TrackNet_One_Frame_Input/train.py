@@ -51,15 +51,15 @@ val_Generator = LoadBatches.InputOutputGenerator( validation_images_name,  train
 
 #start to train the model, and save weights until finish 
 m.fit_generator( Generator,step_per_epochs, epochs,validation_data=val_Generator,validation_steps = 10,use_multiprocessing=True)
-#m.save_weights( save_weights_path + ".0" )
+m.save_weights( save_weights_path + ".0" )
 
 print('Training Done')
 
 #start to train the model, and save weights per 50 epochs  
 
-for ep in range(1, epochs+1 ):
+'''for ep in range(1, epochs+1 ):
 	print "Epoch :", str(ep) + "/" + str(epochs)
 	#m.fit_generator(Generator, step_per_epochs)
     m.fit_generator( Generator,step_per_epochs, epochs,validation_data=val_Generator,validation_steps = 10,use_multiprocessing=True)
 	if ep % 50 == 0:
-		m.save_weights(save_weights_path + ".0")
+		m.save_weights(save_weights_path + ".0")'''
