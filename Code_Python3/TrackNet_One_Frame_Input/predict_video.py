@@ -40,7 +40,7 @@ modelFN = Models.TrackNet.TrackNet
 m = modelFN( n_classes , input_height=height, input_width=width   )
 m.compile(loss='categorical_crossentropy', optimizer= 'adadelta' , metrics=['accuracy'])
 m.load_weights(  save_weights_path  )
-buffer_length = 10
+buffer_length = 20
 # In order to draw the trajectory of tennis, we need to save the coordinate of preious 7 frames 
 q = Queue.deque()
 for i in range(0,buffer_length):
@@ -63,7 +63,7 @@ output_video = cv2.VideoWriter(output_video_path,fourcc, fps, (output_width,outp
 
 count = 1
 
-while(count < 1):
+while(count < 1000):
 
 	#capture frame-by-frame
 	video.set(1,currentFrame); 
@@ -75,7 +75,7 @@ while(count < 1):
 
 	#img is the frame that TrackNet will predict the position
 	#since we need to change the size and type of img, copy it to output_img
-	output_img = img
+	output_img = cv2.flip(img,0)
 
 	#resize it 
 	img = cv2.resize(img, ( width , height ))
