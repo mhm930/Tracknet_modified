@@ -20,7 +20,7 @@ n_classes =  args.n_classes
 
 if output_video_path == "":
 	#output video in same path
-	output_video_path = input_video_path.split('.')[0] + "_TrackNet_Model1.mp4"
+	output_video_path = input_video_path.split('.')[0] + "_TrackNet_Model1_1000.mp4"
 
 #get video fps&video size
 video = cv2.VideoCapture(input_video_path)
@@ -40,22 +40,30 @@ modelFN = Models.TrackNet.TrackNet
 m = modelFN( n_classes , input_height=height, input_width=width   )
 m.compile(loss='categorical_crossentropy', optimizer= 'adadelta' , metrics=['accuracy'])
 m.load_weights(  save_weights_path  )
-
+buffer_length = 10
 # In order to draw the trajectory of tennis, we need to save the coordinate of preious 7 frames 
 q = Queue.deque()
-for i in range(0,8):
+for i in range(0,buffer_length):
 	q.appendleft(None)
 
 #save prediction images as vidoe
 #Tutorial: https://stackoverflow.com/questions/33631489/error-during-saving-a-video-using-python-and-opencv
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 output_video = cv2.VideoWriter(output_video_path,fourcc, fps, (output_width,output_height))
+fps = int(video.get(cv2.CAP_PROP_FPS))
+property_id = int(cv2.CAP_PROP_FRAME_COUNT) 
+frames = int(video.get(property_id))
+print(frames)
+output_width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+output_height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+print (fps,output_width,output_height)
 
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+output_video = cv2.VideoWriter(output_video_path,fourcc, fps, (output_width,output_height))
 
+count = 1
 
-
-
-while(True):
+while(count < 1):
 
 	#capture frame-by-frame
 	video.set(1,currentFrame); 
@@ -127,13 +135,13 @@ while(True):
 		q.pop()
 
 	#draw current frame prediction and previous 7 frames as yellow circle, total: 8 frames
-	for i in range(0,8):
+	for i in range(0,buffer_length):
 		if q[i] is not None:
 			draw_x = q[i][0]
 			draw_y = q[i][1]
-			bbox =  (draw_x - 2, draw_y - 2, draw_x + 2, draw_y + 2)
+			bbox =  (draw_x - 8, draw_y - 8, draw_x + 8, draw_y + 8)
 			draw = ImageDraw.Draw(PIL_image)
-			draw.ellipse(bbox, outline ='yellow')
+			draw.ellipse(bbox, outline ='red')
 			del draw
 
 	#Convert PIL image format back to opencv image format
@@ -143,7 +151,9 @@ while(True):
 
 	#next frame
 	currentFrame += 1
+	count += 1
 
 # everything is done, release the video
 video.release()
 output_video.release()
+
