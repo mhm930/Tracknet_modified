@@ -20,7 +20,7 @@ n_classes =  args.n_classes
 
 if output_video_path == "":
 	#output video in same path
-	output_video_path = input_video_path.split('.')[0] + "_TrackNet_Model1_1000.mp4"
+	output_video_path = '/content/drive/My Drive/' + "_TrackNet_Model1_1000.mp4"
 
 #get video fps&video size
 video = cv2.VideoCapture(input_video_path)
