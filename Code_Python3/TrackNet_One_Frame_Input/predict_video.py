@@ -95,7 +95,7 @@ n_classes =  args.n_classes
 
 if output_video_path == "":
 	#output video in same path
-	output_video_path = '/content/drive/My Drive/' + "_TrackNet_Model1_5695.mp4"
+	output_video_path = '/content/drive/My Drive/' + "_TrackNet_Model1_5695_LS_al.mp4"
 
 #get video fps&video size
 video = cv2.VideoCapture(input_video_path)
@@ -137,7 +137,9 @@ fourcc = cv2.VideoWriter_fourcc(*'XVID')
 output_video = cv2.VideoWriter(output_video_path,fourcc, fps, (output_width,output_height))
 
 count = 1
+bgSubtractor = cv2.createBackgroundSubtractorMOG2()
 
+history = 10
 while(count < 1000):
 
 	tic_total = time.time()
@@ -155,6 +157,8 @@ while(count < 1000):
 	#img is the frame that TrackNet will predict the position
 	#since we need to change the size and type of img, copy it to output_img
 	output_img = cv2.flip(img,0)
+	bg_less_frame = np.uint8(bgSubtractor.apply(output_img, learningRate = 1.0 / history))
+	#bg_less_frame = cv2.cvtColor(output_img, cv2.COLOR_GRAY2BGR)
 
 	#resize it 
 	img = cv2.resize(cv2.flip(img,0), ( width , height ))
@@ -184,18 +188,18 @@ while(count < 1000):
 	#find the circle in image with 2<=radius<=7
 	circles = cv2.HoughCircles(heatmap, cv2.HOUGH_GRADIENT,dp=1,minDist=1,param1=50,param2=2,minRadius=2,maxRadius=7)
 
-	#In order to draw the circle in output_img, we need to used PIL library
-	#Convert opencv image format to PIL image format
-	PIL_image = cv2.cvtColor(output_img, cv2.COLOR_BGR2RGB)   
-	PIL_image = Image.fromarray(PIL_image)
-
 	#check if there have any tennis be detected
 	if circles is not None:
 		#if only one tennis be detected
 		if len(circles) == 1:
 
+            
 			x = int(circles[0][0][0])
 			y = int(circles[0][0][1])
+			r = int(circles[0][0][2])
+            
+            #non_zero_count = np.count_nonzero(bg_less_frame[ymin:ymax,xmin:xmax])
+            #print("Non Zero Count : ", non_zero_count)
 			print (currentFrame, x,y)
 			temp = []
 			q.appendleft([x,y])          
@@ -238,6 +242,12 @@ while(count < 1000):
 		q.pop()
 
 	#draw current frame prediction and previous 7 frames as yellow circle, total: 8 frames
+
+    #In order to draw the circle in output_img, we need to used PIL library
+	#Convert opencv image format to PIL image format
+	PIL_image = cv2.cvtColor(output_img, cv2.COLOR_BGR2RGB)   
+	PIL_image = Image.fromarray(PIL_image)
+
 	for i in range(0,buffer_length):
 		if q[i] is not None:
 			draw_x = q[i][0]
