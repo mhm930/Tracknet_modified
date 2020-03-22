@@ -157,7 +157,7 @@ while(count < 1000):
 	output_img = cv2.flip(img,0)
 
 	#resize it 
-	img = cv2.resize(img, ( width , height ))
+	img = cv2.resize(cv2.flip(img,0), ( width , height ))
 	#input must be float type
 	img = img.astype(np.float32)
 
@@ -220,9 +220,9 @@ while(count < 1000):
 			    plt.plot(temp_x,temp_y,linestyle='-', marker='o')
 			    plt.gca().invert_yaxis()
 			    print('indexes',indexes,len(indexes))
-			    print('Difference Index',np.diff(indexes).all())
-			    plt.plot(temp_x[indexes],temp_y[indexes],'.r')
-			    plt.savefig('graph_{}.png'.format(count))
+			    #print('Difference Index',np.diff(indexes).all())
+			    #plt.plot(temp_x[indexes],temp_y[indexes],'.r')
+			    #plt.savefig('graph_{}.png'.format(count))
   
 			#pop x,y from queue
 			q.pop()    
