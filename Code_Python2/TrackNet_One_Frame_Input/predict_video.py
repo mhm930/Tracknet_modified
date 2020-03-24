@@ -43,7 +43,8 @@ m.load_weights(  save_weights_path  )
 
 # In order to draw the trajectory of tennis, we need to save the coordinate of preious 7 frames 
 q = Queue.deque()
-for i in range(0,8):
+buffer_length = 10
+for i in range(0,buffer_length):
 	q.appendleft(None)
 
 #save prediction images as vidoe
