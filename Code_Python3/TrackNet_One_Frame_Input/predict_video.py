@@ -140,12 +140,12 @@ count = 1
 bgSubtractor = cv2.createBackgroundSubtractorMOG2()
 
 history = 10
-while(count < 1000):
+while(count < frames):
 
 	tic_total = time.time()
 	tic = time.time()
 	possible_LS = [];
-	print(count)
+	print('count',count)
 
 	#capture frame-by-frame
 	video.set(1,currentFrame); 
@@ -165,7 +165,6 @@ while(count < 1000):
 	img = cv2.resize(cv2.flip(img,0), ( width , height ))
 	#input must be float type
 	img = img.astype(np.float32)
-
 
 	#since the odering of TrackNet  is 'channels_first', so we need to change the axis
 	X = np.rollaxis(img, 2, 0)
@@ -193,8 +192,7 @@ while(count < 1000):
 	if circles is not None:
 		#if only one tennis be detected
 		if len(circles) == 1:
-
-            
+           
 			x = int(circles[0][0][0])
 			y = int(circles[0][0][1])
 			r = int(circles[0][0][2])
@@ -204,47 +202,43 @@ while(count < 1000):
 			ymax = y + r
 			
 			non_zero_count = np.count_nonzero(bg_less_frame[ymin:ymax,xmin:xmax])
+			print(non_zero_count)
 			if non_zero_count > 10:
 
               ############ FILTERED FINAL BOX COORDINATES ###########
               
 			  final_bbox_coo = [ymin,xmin,ymax,xmax]             
-			  break
-          
-		if len(final_bbox_coo) != 0:
-			print('zero_count > 0')
-			output_img = cv2.rectangle(output_img, (final_bbox_coo[1], final_bbox_coo[0]),(final_bbox_coo[3], final_bbox_coo[2]),(255,255,0),5)  
-			print("Non Zero Count : ", non_zero_count)
-			print (currentFrame, x,y)
-			temp = []
-			q.appendleft([x,y])          
-			temp = np.array([i for i in q if i]) ;
-			temp.reshape(-1,2)
-			temp_y = temp[:,1]
-			temp_x = temp[:,0]
-			#print ('outliers',detect_outlier(temp_y))
-			indexes = Utils_indexes(temp_y,thres=0.8/max(temp_y), min_dist=0.5)
-			dist = [np.abs(temp_y[i-1]-temp_y[i]) for i in range(1,len(temp_y))]
-			d = (np.std(dist))
-			print(temp_y,dist,d)
+			  
+			  print('zero_count > 0')
+			  output_img = cv2.rectangle(output_img, (final_bbox_coo[1], final_bbox_coo[0]),(final_bbox_coo[3], final_bbox_coo[2]),(255,255,0),5)  
+			  print("Non Zero Count : ", non_zero_count)
+			  print (currentFrame, x,y)
+			  temp = []
+			  q.appendleft([x,y])          
+			  temp = np.array([i for i in q if i]) ;
+			  temp.reshape(-1,2)
+			  temp_y = temp[:,1]
+			  temp_x = temp[:,0]
+			  #print ('outliers',detect_outlier(temp_y))
+			  indexes = Utils_indexes(temp_y,thres=0.8/max(temp_y), min_dist=0.5)
+			  dist = [np.abs(temp_y[i-1]-temp_y[i]) for i in range(1,len(temp_y))]
+			  d = (np.std(dist))
+			  print(temp_y,dist,d)
                           
-			if len(indexes)==1:
+			  if len(indexes)==1:
 			    print ('Possible LS')
 			    print(indexes)
 			    cv2.putText(output_img,'Possible LS',(temp_x[indexes],temp_y[indexes]),cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
 			    possible_LS.append([temp_x[indexes],temp_y[indexes]])
 			    image_np1 = output_img.copy()
-                #cv2.putText(image_np,'Possible LS',(uniq_arr[k][0],uniq_arr[k][1]),cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
+			    #cv2.putText(image_np,'Possible LS',(uniq_arr[k][0],uniq_arr[k][1]),cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
 			    plt.clf()
 			    plt.plot(temp_x,temp_y,linestyle='-', marker='o')
 			    plt.gca().invert_yaxis()
 			    print('indexes',indexes,len(indexes))
-			    #print('Difference Index',np.diff(indexes).all())
-			    #plt.plot(temp_x[indexes],temp_y[indexes],'.r')
-			    #plt.savefig('graph_{}.png'.format(count))
-  
-			#pop x,y from queue
-			q.pop()    
+
+			  #pop x,y from queue
+			  q.pop()    
 		else:
 			#push None to queue
 			q.appendleft(None)
@@ -257,13 +251,12 @@ while(count < 1000):
 		q.pop()
 
 	#draw current frame prediction and previous 7 frames as yellow circle, total: 8 frames
-
     #In order to draw the circle in output_img, we need to used PIL library
 	#Convert opencv image format to PIL image format
 	PIL_image = cv2.cvtColor(output_img, cv2.COLOR_BGR2RGB)   
 	PIL_image = Image.fromarray(PIL_image)
 
-	for i in range(0,buffer_length):
+	for i in range(0,buffer_length-1):
 		if q[i] is not None:
 			draw_x = q[i][0]
 			draw_y = q[i][1]
