@@ -36,7 +36,8 @@ m.compile(loss='categorical_crossentropy', optimizer= optimizer_name, metrics=['
 
 #check if need to retrain the model weights
 if load_weights != "-1":
-	m.load_weights("/content/Tracknet_modified/Code_Python3/TrackNet_Three_Frames_Input/weights/model." + load_weights)
+    print("/content/Tracknet_modified/Code_Python3/TrackNet_Three_Frames_Input/weights/model." + load_weights)
+    m.load_weights("/content/Tracknet_modified/Code_Python3/TrackNet_Three_Frames_Input/weights/model." + load_weights)
 
 #show TrackNet details, save it as TrackNet.png
 plot_model( m , show_shapes=True , to_file='TrackNet.png')
@@ -52,7 +53,7 @@ val_Generator = LoadBatches.InputOutputGenerator( validation_images_name,  train
 #start to train the model, and save weights until finish 
 
 m.fit_generator( Generator,step_per_epochs, epochs,validation_data=val_Generator,validation_steps = 10,use_multiprocessing=True)
-m.save_weights( save_weights_path + ".0" )
+m.save_weights( save_weights_path + ".3" )
 
 
 
