@@ -5,32 +5,36 @@ import glob
 import itertools
 import random
 import csv
+import os
 
-training_file_name = "./TrackNet_Three_Frames_Input/training_model2.csv"
-testing_file_name = "./TrackNet_Three_Frames_Input/testing_model2.csv"
+training_file_name = "/content/drive/My Drive/training_model2.csv"
+testing_file_name = "/content/drive/My Drive/testing_model2.csv"
 visibility_for_testing = []
 
-images_path = '/dataset/tennis/'
-dirs = glob.glob(images_path+'data/Clip*')
+images_path = '/content/drive/My Drive/Tennis-data-2/Tennis-data-2'
+dirs = glob.glob(images_path)
 with open(training_file_name,'w') as file:
     for index in dirs:
         #################change the path####################################################
-        annos_path = images_path +'groundtruth/'+os.path.split(index)[-1]+'/'
+        #annos_path = images_path +'groundtruth/'+os.path.split(index)[-1]+'/'
+        annos_path = '/content/drive/My Drive/Tennis-data-2' +'groundtruth/'+os.path.split(index)[-1]+'/'
+        print(annos_path)
         images_path = index+'/'
         ####################################################################################
 
         images = glob.glob( images_path + "*.jpg"  ) + glob.glob( images_path + "*.png"  ) +  glob.glob( images_path + "*.jpeg"  )
         images.sort()
         annotations  = glob.glob( annos_path + "*.jpg"  ) + glob.glob( annos_path + "*.png"  ) +  glob.glob( annos_path + "*.jpeg"  )
-        annotations.sort()
         
+        annotations.sort()
+        print(len(images),len(annotations))
         #check if annotation counts equals to image counts
         assert len( images ) == len(annotations)
         for im , seg in zip(images,annotations):
             assert(  im.split('/')[-1].split(".")[0] ==  seg.split('/')[-1].split(".")[0] )
 
         visibility = {}
-        with open(images_path + "Label.csv", 'r') as csvfile:
+        with open("/content/drive/My Drive/Labeled dataset 2.csv", 'r') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
             #skip the headers
             next(spamreader, None)  
@@ -70,7 +74,7 @@ random.shuffle(lines)
 with open(training_file_name,'w') as training_file:
     training_file.write("img, img1, img2, ann\n")
     #testing images
-    with open(testing_file_name,'wb') as testing_file:
+    with open(testing_file_name,'w') as testing_file:
         testing_file.write("img, img1, img2, ann\n")
         
         #write img, img1, img2, ann to csv file
@@ -87,35 +91,28 @@ testing_file.close()
 
 
 ## 4.Output All of training data name to cvs file for new labeling
-training_file_name = "./TrackNet_Three_Frames_Input/training_model3.csv"
+training_file_name = "/content/drive/My Drive/training_model3.csv"
 count = 0
 with open(training_file_name,'w') as file:
 
-    for g in range(1,9):
-        #################change the path####################################################
-        LabelingData_dir = '/home/weber/Documents/Andersen/Data/LabelingData/game' + str(g)
-
-        ####################################################################################
-        list = os.listdir(LabelingData_dir) # dir is your directory path
-        number_clips = len(list)
-        for index in range(1,number_clips+1):
             #################change the path####################################################
-            images_path = "/home/weber/Documents/Andersen/Data/LabelingData/game" + str(g) + "/Clip" + str(index) + "/"
-            annos_path = "/home/weber/Documents/Andersen/Data/LabelingData/game" + str(g) + "_GroundTruth/Clip" + str(index) + "/"
+            images_path = '/content/drive/My Drive/Tennis-data-2/Tennis-data-2/'
+            annos_path = '/content/drive/My Drive/Tennis-data-2' +'groundtruth/'+os.path.split(index)[-1]+'/'
             ####################################################################################
 
             images = glob.glob( images_path + "*.jpg"  ) + glob.glob( images_path + "*.png"  ) +  glob.glob( images_path + "*.jpeg"  )
             images.sort()
             annotations  = glob.glob( annos_path + "*.jpg"  ) + glob.glob( annos_path + "*.png"  ) +  glob.glob( annos_path + "*.jpeg"  )
             annotations.sort()
-
+            print(len(images),len(annotations))
             #check if annotation counts equals to image counts
             assert len( images ) == len(annotations)
+
             for im , seg in zip(images,annotations):
                 assert(  im.split('/')[-1].split(".")[0] ==  seg.split('/')[-1].split(".")[0] )
 
                 
-            with open(images_path + "Label.csv", 'r') as csvfile:
+            with open("/content/drive/My Drive/Labeled dataset 2.csv", 'r') as csvfile:
                 spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
                 #skip the headers
                 next(spamreader, None)  
@@ -138,13 +135,13 @@ print("Total Count:", count)
 file.close()
 
 ## 5.output training csv file for new labeling image
-output_file_name = "./TrackNet_Three_Frames_Input/training_model3.csv"
-training_file_name = "./TrackNet_Three_Frames_Input/training_model3.csv"
+output_file_name = "/content/drive/My Drive/training_model3.csv"
+training_file_name = "/content/drive/My Drive/training_model3.csv"
 #read all of images path
 lines = open(training_file_name).read().splitlines()
 
 
-training_file_name1 = "./TrackNet_Three_Frames_Input/training_model2.csv"
+training_file_name1 = "/content/drive/My Drive/training_model2.csv"
 #read all of images path
 lines1 = open(training_file_name1).read().splitlines()
 
