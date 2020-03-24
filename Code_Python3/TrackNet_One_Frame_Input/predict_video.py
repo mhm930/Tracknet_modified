@@ -145,6 +145,7 @@ while(count < 1000):
 	tic_total = time.time()
 	tic = time.time()
 	possible_LS = [];
+	print(count)
 
 	#capture frame-by-frame
 	video.set(1,currentFrame); 
@@ -158,7 +159,7 @@ while(count < 1000):
 	#since we need to change the size and type of img, copy it to output_img
 	output_img = cv2.flip(img,0)
 	bg_less_frame = np.uint8(bgSubtractor.apply(output_img, learningRate = 1.0 / history))
-	#bg_less_frame = cv2.cvtColor(output_img, cv2.COLOR_GRAY2BGR)
+	bg_less_frame = cv2.cvtColor(bg_less_frame, cv2.COLOR_GRAY2BGR)
 
 	#resize it 
 	img = cv2.resize(cv2.flip(img,0), ( width , height ))
@@ -197,9 +198,23 @@ while(count < 1000):
 			x = int(circles[0][0][0])
 			y = int(circles[0][0][1])
 			r = int(circles[0][0][2])
-            
-            #non_zero_count = np.count_nonzero(bg_less_frame[ymin:ymax,xmin:xmax])
-            #print("Non Zero Count : ", non_zero_count)
+			xmin = x - r
+			ymin = y - r
+			xmax = x + r
+			ymax = y + r
+			
+			non_zero_count = np.count_nonzero(bg_less_frame[ymin:ymax,xmin:xmax])
+			if non_zero_count > 10:
+
+              ############ FILTERED FINAL BOX COORDINATES ###########
+              
+			  final_bbox_coo = [ymin,xmin,ymax,xmax]             
+			  break
+          
+		if len(final_bbox_coo) != 0:
+			print('zero_count > 0')
+			output_img = cv2.rectangle(output_img, (final_bbox_coo[1], final_bbox_coo[0]),(final_bbox_coo[3], final_bbox_coo[2]),(255,255,0),5)  
+			print("Non Zero Count : ", non_zero_count)
 			print (currentFrame, x,y)
 			temp = []
 			q.appendleft([x,y])          
