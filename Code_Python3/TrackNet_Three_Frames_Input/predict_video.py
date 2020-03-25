@@ -95,7 +95,7 @@ n_classes =  args.n_classes
 
 if output_video_path == "":
 	#output video in same path
-	output_video_path = '/content/drive/My Drive/' + "_TrackNet_Model1_5695_LS_al_model3.mp4"
+	output_video_path = '/content/drive/My Drive/' + "_TrackNet_Model1_5695_LS_al_model3_TPU.mp4"
 
 #get video fps&video size
 video = cv2.VideoCapture(input_video_path)
@@ -145,10 +145,10 @@ history = 10
 video.set(1,currentFrame); 
 ret, img1 = video.read()
 #write image to video
-output_video.write(cv2.flip(img1,0))
+output_video.write(img1)
 currentFrame +=1
 #resize it 
-img1 = cv2.resize(cv2.flip(img1,0), ( width , height ))
+img1 = cv2.resize(img1, ( width , height ))
 #input must be float type
 img1 = img1.astype(np.float32)
 
@@ -156,10 +156,10 @@ img1 = img1.astype(np.float32)
 video.set(1,currentFrame);
 ret, img = video.read()
 #write image to video
-output_video.write(cv2.flip(img,0))
+output_video.write(img)
 currentFrame +=1
 #resize it 
-img = cv2.resize(cv2.flip(img,0), ( width , height ))
+img = cv2.resize(img, ( width , height ))
 #input must be float type
 img = img.astype(np.float32)
 
@@ -184,7 +184,7 @@ while(count < 1000):
 
 	#img is the frame that TrackNet will predict the position
 	#since we need to change the size and type of img, copy it to output_img
-	output_img = cv2.flip(img,0)
+	output_img = img
 
 	#resize it 
 	img = cv2.resize(img, ( width , height ))
@@ -194,7 +194,7 @@ while(count < 1000):
 	#since we need to change the size and type of img, copy it to output_img
 
     #resize it 
-	img = cv2.resize(cv2.flip(img,0), ( width , height ))
+	img = cv2.resize(img, ( width , height ))
 	#input must be float type
 	img = img.astype(np.float32)
 	bg_less_frame = np.uint8(bgSubtractor.apply(output_img, learningRate = 1.0 / history))
