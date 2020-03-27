@@ -6,6 +6,7 @@ import itertools
 import random
 import csv
 import os
+import re
 
 training_file_name = "/content/drive/My Drive/training_model2.csv"
 testing_file_name = "/content/drive/My Drive/testing_model2.csv"
@@ -13,6 +14,13 @@ visibility_for_testing = []
 
 images_path = '/content/drive/My Drive/Tennis-data-2/Tennis-data-2'
 dirs = glob.glob(images_path)
+
+def sorted_nicely( l ): 
+    """ Sort the given iterable in the way that humans expect.""" 
+    convert = lambda text: int(text) if text.isdigit() else text 
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
+    return sorted(l, key = alphanum_key)
+
 with open(training_file_name,'w') as file:
     for index in dirs:
         #################change the path####################################################
@@ -23,10 +31,9 @@ with open(training_file_name,'w') as file:
         ####################################################################################
 
         images = glob.glob( images_path + "*.jpg"  ) + glob.glob( images_path + "*.png"  ) +  glob.glob( images_path + "*.jpeg"  )
-        images.sort()
-        annotations  = glob.glob( annos_path + "*.jpg"  ) + glob.glob( annos_path + "*.png"  ) +  glob.glob( annos_path + "*.jpeg"  )
-        
-        annotations.sort()
+        images = sorted_nicely(images)
+        annotations  = glob.glob( annos_path + "*.jpg"  ) + glob.glob( annos_path + "*.png"  ) +  glob.glob( annos_path + "*.jpeg"  )       
+        annotations = sorted_nicely(annotations)
         print(len(images),len(annotations))
         #check if annotation counts equals to image counts
         assert len( images ) == len(annotations)
@@ -101,9 +108,9 @@ with open(training_file_name,'w') as file:
             ####################################################################################
 
             images = glob.glob( images_path + "*.jpg"  ) + glob.glob( images_path + "*.png"  ) +  glob.glob( images_path + "*.jpeg"  )
-            images.sort()
+            images = sorted_nicely(images)
             annotations  = glob.glob( annos_path + "*.jpg"  ) + glob.glob( annos_path + "*.png"  ) +  glob.glob( annos_path + "*.jpeg"  )
-            annotations.sort()
+            annotations = sorted_nicely(annotations)
             print(len(images),len(annotations))
             #check if annotation counts equals to image counts
             assert len( images ) == len(annotations)
